@@ -16,6 +16,7 @@ var fade_in:bool = false
 func _ready():
 	GlobalSignals.connect("load_scene", _load_scene)
 	set_process(false)
+	transition_player.play("Fade")
 ##
 
 func _process(_delta):
@@ -28,14 +29,13 @@ func _process(_delta):
 	#	be touched if we have already loaded the scene, more if something goes wrong DURING loading.
 	
 	# if it's not done or loaded
-	if thread_status != 1 or thread_status != 3:
-		print("An error has occured loading %s!", scene_name)
+	if thread_status == 2:
+		print("An error has occured loading ", scene_name, "!")
 		return # stop!
-	##
-	
-	# if we're done, kind of redundant but better safe than sorry
-	if thread_status == 3:
-		return # no error, but don't continue -- we loaded the scene already
+	elif thread_status == 0:
+		print("The scene ", scene_name, " is invalid or not loaded properly!")
+		print("Provided path: ", scene_path)
+		return # stop!
 	##
 	
 	progress = progress[0]
@@ -77,7 +77,7 @@ func _load_scene(scene:String):
 		return
 	##
 	
-	GlobalSignals.emit("scene_transition_started")
+	GlobalSignals.emit_signal("scene_transition_started")
 	
 	transition_player.play_backwards("Fade")
 	fade_in = false
@@ -87,6 +87,6 @@ func _load_scene(scene:String):
 
 func _on_transition_player_animation_finished(anim_name):
 	if fade_in:
-		GlobalSignals.emit("scene_transition_done")
+		GlobalSignals.emit_signal("scene_transition_done")
 	##
 ##
