@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bsnotav16xldg"]
-
-[ext_resource type="Script" path="res://autoloads/SoundManager.gd" id="1_r7hdq"]
-
-[node name="GlobalSoundManager" type="Node"]
-script = ExtResource("1_r7hdq")

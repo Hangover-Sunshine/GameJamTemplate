@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dy3d46uf65gpy"]
 
-[ext_resource type="Script" path="res://scripts/system/SceneController.gd" id="1_svjoe"]
+[ext_resource type="Script" path="res://scripts/system/SceneController.cs" id="1_531gu"]
 [ext_resource type="PackedScene" uid="uid://d1mvpklkradab" path="res://scenes/DummySceneA.tscn" id="2_dtb2u"]
 
 [sub_resource type="Animation" id="Animation_4mi1i"]
@@ -23,9 +23,8 @@ _data = {
 "Fade": SubResource("Animation_4mi1i")
 }
 
-[node name="MainScene" type="Node" node_paths=PackedStringArray("curr_scene")]
-script = ExtResource("1_svjoe")
-curr_scene = NodePath("DummSceneA")
+[node name="MainScene" type="Node"]
+script = ExtResource("1_531gu")
 
 [node name="TransitionPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -45,5 +44,3 @@ mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="DummSceneA" parent="." instance=ExtResource("2_dtb2u")]
-
-[connection signal="animation_finished" from="TransitionPlayer" to="." method="_on_transition_player_animation_finished"]
