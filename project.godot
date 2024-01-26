@@ -1,0 +1,40 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Game Jam Template"
+run/main_scene="res://scenes/MainScene.tscn"
+config/features=PackedStringArray("4.2", "Forward Plus")
+config/icon="res://_SYSTEM/HS_DesktopIcon.png"
+config/windows_native_icon="res://_SYSTEM/Windows/icon.ico"
+
+[autoload]
+
+RandUtilities="*res://autoloads/RandUtilities.gd"
+GlobalSignals="*res://autoloads/GlobalSignals.gd"
+GlobalSoundManager="*res://autoloads/GlobalSoundManager.tscn"
+
+[dotnet]
+
+project/assembly_name="Game Jam Template"
+
+[file_customization]
+
+folder_colors={
+"res://_SYSTEM/": "gray",
+"res://addons/": "red",
+"res://assets/": "orange",
+"res://autoloads/": "yellow",
+"res://nodes/": "green",
+"res://prefabs/": "teal",
+"res://scenes/": "blue",
+"res://scripts/": "purple"
+}
