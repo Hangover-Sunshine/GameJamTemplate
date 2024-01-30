@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Game Jam Template"
 run/main_scene="res://scenes/MainScene.tscn"
-config/features=PackedStringArray("4.2", "Forward Plus")
+config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://_SYSTEM/HS_DesktopIcon.png"
 config/windows_native_icon="res://_SYSTEM/Windows/icon.ico"
 

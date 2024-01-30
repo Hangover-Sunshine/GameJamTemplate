@@ -7,7 +7,7 @@ namespace HS.Sound
     /// A pool for individual sounds in a stereo manner, meant for short sounds. If you have sounds that could last a while, then consider using a SoundQueuePool instead.
     /// </summary>
     [Tool]
-    public partial class SoundPool2D : Node
+    public partial class SoundPool2D : Node2D
     {
         // EXPORTS //////////////////////////////////////////
         /// <summary>

@@ -16,21 +16,11 @@ namespace HS.Sound
         [Export] private bool StopRepeatingSounds = false;
         
         /// <summary>
-        /// The number of copies - on top of the original sound - to make.
-        /// </summary>
-        [Export] private int Copies = 5;
-
-        /// <summary>
         /// The number of attempts to select another song before giving up and not playing.
         /// </summary>
         [Export] private int MaxAttempts = 5;
         // EXPORTS //////////////////////////////////////////
         
-        public int Count
-        {
-            get { return Copies + 1; }
-        }
-
         /// <summary>
         /// ID of previously played sound.
         /// </summary>
