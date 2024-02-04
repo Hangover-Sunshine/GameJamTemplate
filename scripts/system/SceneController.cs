@@ -1,13 +1,18 @@
 using Godot;
+using HS.Autoloads;
 
 public partial class SceneController : Node
 {
 	// EXPORTS //////////////////////////////////////////
 	[Export] private string SceneFolderPath = "scenes/";
 
-	[Export] private Node CurrentScene;
+	[Export] private Node2D CurrentScene;
 
 	[Export] private AnimationPlayer AnimPlayer;
+	
+	[ExportGroup("Transition Fade")]
+	[Export] private bool PlayFadeAnimInFull = false;
+	[Export] private float TimeToStayFaded = 2.5f;
 	// EXPORTS //////////////////////////////////////////
 	
 	private Node2D m_currScene = null;
@@ -17,10 +22,14 @@ public partial class SceneController : Node
 
 	private bool m_fadeIn = false;
 
+	private bool m_fadeOutComplete = false;
+
 	public override void _Ready()
 	{
-		// TODO: connect a signal
+		m_currScene = CurrentScene;
+		GlobalSignals.SignalBus.LoadScene += LoadScene_Signal;
 		SetProcess(false);
+		AnimPlayer.Play("Fade");
 	}
 
 	public override void _Process(double delta)
@@ -58,18 +67,17 @@ public partial class SceneController : Node
 
 		float progress = (float)prog[0];
 
-		if (progress >= 1.0f)
+		if (progress >= 1.0f && (PlayFadeAnimInFull == false || m_fadeOutComplete))
 		{
 			// Done!
 			// Emit signal that the scene has been loaded
 			m_currScene.ZIndex = -100;
+			GlobalSignals.SignalBus.EmitSignal(GlobalSignals.SignalName.SceneLoaded, m_sceneName);
 
-			// Slight bit of work around because of C#
-			Resource sceneResource = ResourceLoader.LoadThreadedGet(m_scenePath);
-			sceneResource.ResourceLocalToScene = true;
+			PackedScene sceneResource = ResourceLoader.LoadThreadedGet(m_scenePath).Duplicate(true) as PackedScene;
 			
 			// Now we actually have the scene!
-			Node2D scene = sceneResource.GetLocalScene() as Node2D;
+			Node2D scene = sceneResource.Instantiate() as Node2D;
 			m_currScene = scene;
 			AddChild(scene);
 			
@@ -105,10 +113,25 @@ public partial class SceneController : Node
 		}
 
 		// emit signal that we've begun transitioning
+		GlobalSignals.SignalBus.EmitSignal(GlobalSignals.SignalName.SceneTransitionStarted);
 
 		m_fadeIn = false;
+		m_fadeOutComplete = false;
 		AnimPlayer.PlayBackwards("Fade");
 
 		SetProcess(true);
+	}
+
+	public void OnFadeFinished(string animationName)
+	{
+		if (m_fadeIn)
+		{
+			GlobalSignals.SignalBus.EmitSignal(GlobalSignals.SignalName.SceneTransitionFinished);
+		}
+
+		if (PlayFadeAnimInFull)
+		{
+			m_fadeOutComplete = true;
+		}
 	}
 }

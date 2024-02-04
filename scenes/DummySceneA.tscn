@@ -1,6 +1,10 @@
-[gd_scene format=3 uid="uid://d1mvpklkradab"]
+[gd_scene load_steps=2 format=3 uid="uid://d1mvpklkradab"]
 
-[node name="DummSceneA" type="Node2D"]
+[ext_resource type="Script" path="res://scripts/dummy_scripts/DummySceneScript.cs" id="1_y0qgf"]
+
+[node name="DummySceneA" type="Node2D"]
+script = ExtResource("1_y0qgf")
+NextScene = "DummySceneB"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -26,3 +30,5 @@ offset_bottom = -61.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Go to Scene B"
+
+[connection signal="pressed" from="CanvasLayer/ColorRect/Button" to="." method="OnButtonPressed"]

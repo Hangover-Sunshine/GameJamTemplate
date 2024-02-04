@@ -18,9 +18,8 @@ config/windows_native_icon="res://_SYSTEM/Windows/icon.ico"
 
 [autoload]
 
-RandUtilities="*res://autoloads/RandUtilities.gd"
-GlobalSignals="*res://autoloads/GlobalSignals.gd"
-GlobalSoundManager="*res://autoloads/GlobalSoundManager.tscn"
+GlobalSignals="*res://autoloads/GlobalSignals.cs"
+RandomUtility="*res://autoloads/RandomUtility.cs"
 
 [dotnet]
 

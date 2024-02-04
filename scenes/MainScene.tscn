@@ -23,8 +23,10 @@ _data = {
 "Fade": SubResource("Animation_4mi1i")
 }
 
-[node name="MainScene" type="Node"]
+[node name="MainScene" type="Node" node_paths=PackedStringArray("CurrentScene", "AnimPlayer")]
 script = ExtResource("1_531gu")
+CurrentScene = NodePath("DummySceneA")
+AnimPlayer = NodePath("TransitionPlayer")
 
 [node name="TransitionPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -43,4 +45,6 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[node name="DummSceneA" parent="." instance=ExtResource("2_dtb2u")]
+[node name="DummySceneA" parent="." instance=ExtResource("2_dtb2u")]
+
+[connection signal="animation_finished" from="TransitionPlayer" to="." method="OnFadeFinished"]

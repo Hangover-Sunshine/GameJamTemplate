@@ -1,6 +1,10 @@
-[gd_scene format=3 uid="uid://bf21if8rop4yi"]
+[gd_scene load_steps=2 format=3 uid="uid://bf21if8rop4yi"]
+
+[ext_resource type="Script" path="res://scripts/dummy_scripts/DummySceneScript.cs" id="1_xnwn4"]
 
 [node name="DummySceneB" type="Node2D"]
+script = ExtResource("1_xnwn4")
+NextScene = "DummySceneA"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -19,3 +23,5 @@ offset_top = 328.0
 offset_right = 307.0
 offset_bottom = 359.0
 text = "Go to Scene A"
+
+[connection signal="pressed" from="CanvasLayer/ColorRect/Button" to="." method="OnButtonPressed"]

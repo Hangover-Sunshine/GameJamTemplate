@@ -4,6 +4,13 @@ namespace HS.Autoloads
 {
     public partial class GlobalSignals : Node
     {
+        public static GlobalSignals SignalBus { get; private set; }
+
+        public override void _Ready()
+        {
+            SignalBus = GetNode<GlobalSignals>("/root/GlobalSignals");
+        }
+
         // SYSTEM LOADING //////////////////////////////////////////
         [Signal] public delegate void LoadSceneEventHandler (string sceneName);
         [Signal] public delegate void SceneLoadedEventHandler(string newSceneName);
