@@ -25,11 +25,22 @@ namespace HS.Input
 
             foreach(string action in InputMap.GetActions())
             {
-                // A strong assumption that our/your InputMaps will only ever allow ONE key
-                m_actionToKey[action] = InputMap.ActionGetEvents(action)[0];
+                Array<InputEvent> arr = InputMap.ActionGetEvents(action);
+                if(arr.Count > 0)
+                    m_actionToKey.Add(action, arr[0]);
             }
 
-            LoadKeyMapping();
+            // If it exists before, we should load that
+            if (DirAccess.DirExistsAbsolute("user://player/"))
+            {
+                LoadKeyMapping();
+            }
+            // Otherwise, we don't, so save the current loadout and continue as normal
+            else
+            {
+                DirAccess.MakeDirAbsolute("user://player/");
+                SaveKeyMapping();
+            }
         }
 
         public void LoadKeyMapping()

@@ -28,6 +28,9 @@ script = ExtResource("1_531gu")
 CurrentScene = NodePath("DummySceneA")
 AnimPlayer = NodePath("TransitionPlayer")
 
+[node name="StayFadedTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="TransitionPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_fxn12")

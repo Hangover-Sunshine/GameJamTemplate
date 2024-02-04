@@ -12,9 +12,12 @@ public partial class SceneController : Node
 	
 	[ExportGroup("Transition Fade")]
 	[Export] private bool PlayFadeAnimInFull = false;
+	[Export] private bool StayFaded = false;
 	[Export] private float TimeToStayFaded = 2.5f;
 	// EXPORTS //////////////////////////////////////////
 	
+	private Timer m_stayFadedTimer;
+
 	private Node2D m_currScene = null;
 
 	private string m_sceneName = null;
@@ -30,6 +33,8 @@ public partial class SceneController : Node
 		GlobalSignals.SignalBus.LoadScene += LoadScene_Signal;
 		SetProcess(false);
 		AnimPlayer.Play("Fade");
+
+		m_stayFadedTimer = GetNode<Timer>("StayFadedTimer");
 	}
 
 	public override void _Process(double delta)
@@ -67,7 +72,7 @@ public partial class SceneController : Node
 
 		float progress = (float)prog[0];
 
-		if (progress >= 1.0f && (PlayFadeAnimInFull == false || m_fadeOutComplete))
+		if (progress >= 1.0f && (PlayFadeAnimInFull == false || (m_fadeOutComplete && m_stayFadedTimer.IsStopped())))
 		{
 			// Done!
 			// Emit signal that the scene has been loaded
@@ -131,6 +136,10 @@ public partial class SceneController : Node
 
 		if (PlayFadeAnimInFull)
 		{
+			if (StayFaded)
+			{
+				m_stayFadedTimer.Start(TimeToStayFaded);
+			}
 			m_fadeOutComplete = true;
 		}
 	}
