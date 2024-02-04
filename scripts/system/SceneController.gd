@@ -1,9 +1,17 @@
 extends Node
 
+# Exports ########################################
 @export var scene_folder_path:String = "scenes/"
 @export var curr_scene:Node
 
+@export_category("Transition Fade")
+@export var play_fade_fully:bool = false
+@export var stay_faded:bool = false
+@export var stay_faded_time:float = 2.5
+# Exports ########################################
+
 @onready var transition_player:AnimationPlayer = $TransitionPlayer
+@onready var stay_faded_timer:Timer = $StayFadedTimer
 
 var undo_load_overlay:bool = false
 
@@ -11,6 +19,7 @@ var scene_name:String
 var scene_path:String
 
 var fade_in:bool = false
+var fade_completed:bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -40,7 +49,7 @@ func _process(_delta):
 	
 	progress = progress[0]
 	
-	if progress == 1:
+	if progress >= 1 and (play_fade_fully == false || (fade_completed and stay_faded_timer.is_stopped())):
 		# inform the prior scene it's time to clean up
 		GlobalSignals.emit_signal("scene_loaded", scene_name)
 		curr_scene.z_index = -100
@@ -81,6 +90,7 @@ func _load_scene(scene:String):
 	
 	transition_player.play_backwards("Fade")
 	fade_in = false
+	fade_completed = false
 	
 	set_process(true)
 ##
@@ -88,5 +98,12 @@ func _load_scene(scene:String):
 func _on_transition_player_animation_finished(anim_name):
 	if fade_in:
 		GlobalSignals.emit_signal("scene_transition_done")
+	##
+	
+	if play_fade_fully:
+		if stay_faded:
+			stay_faded_timer.start(stay_faded_time)
+		##
+		fade_completed = true
 	##
 ##

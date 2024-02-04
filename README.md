@@ -4,9 +4,6 @@ Hangover Sunshine game jam template to provide baseline setup information agnost
 ## Exporting to Windows
 If you run into a problem with Windows Security (or other) anti-virus software flagging the build as a problem, it's likely due to the embded PCK. Uncheck that, it just becomes more annoying for the end user in the event the game refuses to launch.
 
-## Exporting to Mac
-TODO: make the build chain for it
-
 ## For Web
 The provided template provides a Web build version; however, Godot 4.2 doesn't support C# exports to web. Use the non-Mono-supportive version of the engine to build the game.
 
