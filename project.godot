@@ -20,6 +20,7 @@ config/windows_native_icon="res://_SYSTEM/Windows/icon.ico"
 
 GlobalSignals="*res://autoloads/GlobalSignals.cs"
 RandomUtility="*res://autoloads/RandomUtility.cs"
+InputPersistence="*res://autoloads/InputPersistence.cs"
 
 [dotnet]
 

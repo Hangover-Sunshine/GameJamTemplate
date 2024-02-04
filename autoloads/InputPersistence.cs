@@ -7,6 +7,8 @@ namespace HS.Input
     {
         // NOTE: this implements a single, global keymapping system for ALL saves/players on the system running.
         //  TODO: maybe something that allows players to save different mappings out?
+
+        public static InputPersistence IPSingleton { get; private set; }
         
         // All information regarding the (local) player are stroed in player/ for convenience in Hangover Sunshine games
         private const string KEY_MAPS_DIR = "user://player/keybindings.data";
@@ -17,6 +19,8 @@ namespace HS.Input
 
         public override void _Ready()
         {
+            IPSingleton = this;
+
             m_actionToKey = new Dictionary<string, InputEvent>();
 
             foreach(string action in InputMap.GetActions())
