@@ -13,7 +13,12 @@ func _ready():
 		keymaps[action] = InputMap.action_get_events(action)
 	##
 	
-	load_key_mapping()
+	if DirAccess.dir_exists_absolute(KEY_MAPS_DIR):
+		load_key_mapping()
+	else:
+		DirAccess.make_dir_absolute("user://player/")
+		save_key_mapping()
+	##
 ##
 
 func load_key_mapping():
