@@ -7,6 +7,9 @@ If you run into a problem with Windows Security (or other) anti-virus software f
 ## For Web
 The provided template provides a Web build version; however, Godot 4.2 doesn't support C# exports to web. Use the non-Mono-supportive version of the engine to build the game.
 
+## For Mac
+If you are not building on a Mac, you will need to have Rust installed so the rcodesign application can sign/notarize your game/software.
+
 ## Non-Hangover Sunshine Users
 Go ahead and feel free to use this template for whatever you want - jam, actual game, etc. If you wish to give credit, credit the template as this:
 
